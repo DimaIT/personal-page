@@ -97,11 +97,11 @@ p,li {
 }
 
 #contactDetails ul li a, a[href^=tel] {
-	color: #444; 
+	color: #444;
 	text-decoration: none;
 }
 
-#contactDetails ul li a:hover { 
+#contactDetails ul li a:hover {
 	color: #cf8a05;
 }
 
@@ -233,27 +233,27 @@ article li {
 		margin: 10px auto;
 		min-width: 280px;
 	}
-	
+
 	#headshot {
 		display: none;
 	}
-	
+
 	#name, #contactDetails {
 		float: none;
 		width: 100%;
 		text-align: center;
 	}
-	
+
 	.sectionTitle, .sectionContent {
 		float: none;
 		width: 100%;
 	}
-	
+
 	.sectionTitle {
 		margin-left: -2px;
 		font-size: 1.25em;
 	}
-	
+
 	.keySkills {
 		-moz-column-count:2;
 		-webkit-column-count:2;
@@ -265,22 +265,22 @@ article li {
 	.mainDetails {
 		padding: 15px 15px;
 	}
-	
+
 	section {
 		padding: 15px 0 0;
 	}
-	
+
 	#mainArea {
 		padding: 0 25px;
 	}
 
-	
+
 	.keySkills {
 	-moz-column-count:1;
 	-webkit-column-count:1;
 	column-count:1;
 	}
-	
+
 	#name h1 {
 		line-height: .8em;
 		margin-bottom: 4px;
@@ -291,6 +291,10 @@ article li {
     #cv {
         width: 100%;
     }
+	.no-print, .no-print *
+	{
+		display: none !important;
+	}
 }
 
 @-webkit-keyframes reset {
