@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html style="height: 100%" lang="en">
+<head>
+    <title>...</title>
+    <script type="text/javascript">
+      const context = new window.AudioContext();
+
+      function sound(hz, time) {
+        hz = hz || 500;
+        time = time || 2;
+        let osc = context.createOscillator(); // instantiate an oscillator
+        osc.type = 'sine'; // this is the default - also square, sawtooth, triangle
+        osc.frequency.value = hz;
+        osc.connect(context.destination); // connect it to the destination
+        osc.start(); // start the oscillator
+        osc.stop(context.currentTime + time);
+      }
+    </script>
+    <style type="text/css">
+        .custom-control-label::before,
+        .custom-control-label::after {
+            top: .8rem !important;
+            width: 1.25rem !important;
+            height: 1.25rem !important;
+        }
+    </style>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body style="
+	zoom: 150%;
+    background: linear-gradient(125deg, #450244 0%, #270643 40%, #000024 100%);
+    color: white;">
+<div class="container">
+    <div class="col-sm-4 offset-sm-4" style="padding-top: 100px">
+        <div class="text-center"><h1 id="status">Hello There</h1></div>
+        <div class="form-group">
+            <label for="time">Time (min)</label>
+            <input id="time" type="number" class="form-control" placeholder="30"
+                   style="color: #ccc; background-color: #333">
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="ignore-away">
+            <label class="custom-control-label" for="ignore-away" style="margin-left: 1rem;">Allow away</label>
+        </div>
+        <button id="start" type="submit" class="btn btn-success" style="margin-top: 20px">Start</button>
+    </div>
+    <script type="text/javascript">
+      document.getElementById('start').onclick = start;
+
+      let timeLeft;
+      let interval;
+      let away = false;
+
+      function start() {
+        clearInterval(interval);
+        timeLeft = (document.getElementById('time').value || 30) * 60;
+        displayStatus();
+
+        interval = setInterval(() => {
+          timeLeft--;
+          if (timeLeft < 1) {
+            clearInterval(interval);
+            sound(400, 0.3);
+          } else {
+            if (away && !document.getElementById('ignore-away').checked) {
+              sound(600, 0.5);
+            }
+            displayStatus();
+          }
+        }, 999);
+      }
+
+      function displayStatus() {
+        let leftSec = timeLeft % 60;
+        let leftStr = (timeLeft - leftSec) / 60 + ':' + (leftSec < 10 ? '0' + leftSec : leftSec);
+        document.getElementById('status').innerText = leftStr;
+        document.title = leftStr + ' work!!!';
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        away = document.visibilityState === 'hidden';
+      });
+
+      window.onbeforeunload = () => 'text';
+    </script>
+</div>
+</body>
+</html>
