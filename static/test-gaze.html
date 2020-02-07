@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test cursor move</title>
+    <style>
+        * { margin:0; padding:0; }
+        html, body { width:100%; height:100%; }
+        canvas { display:block; }
+    </style>
+</head>
+<body>
+<div id="test" style="margin: 50px; padding: 10px; width: 300px; height: 200px; border: #ccc solid 2px"></div>
+<div id="marker" style="
+    left: 0;
+    top: 0;
+    position: absolute;
+    border-radius: 25px;
+    width: 46px;
+    height: 46px;
+    border: #eee solid 2px
+"></div>
+
+<script>
+    let timeout = null;
+    window.onmousemove = e => {
+        test.style.backgroundColor = '#A0E8A8';
+        test.innerText = `x: ${e.x}; y: ${e.y}`;
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => {
+            test.style.backgroundColor = '#fff';
+        }, 50);
+
+        marker.style.left = `${e.x - 25}px`;
+        marker.style.top = `${e.y - 25}px`;
+    }
+</script>
+</body>
+</html>
