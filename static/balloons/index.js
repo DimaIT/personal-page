@@ -1,6 +1,6 @@
-const BALLOON_RADIUS = 50;
-const TARGET_RADIUS = 100;
-const DEFAULT_HEALTH = 2000; // ms
+let BALLOON_RADIUS = 50;
+let TARGET_RADIUS = 100;
+let DEFAULT_HEALTH = 2000; // ms
 
 const canvas = document.getElementById('canvas');
 const balloonTemplate = document.getElementById('balloon-template');
@@ -37,7 +37,18 @@ class Balloon {
     createNode() {
         const b = balloonTemplate.content.querySelector('.balloon').cloneNode(true);
         this.node = b;
+
         this.targetNode = b.querySelector('.target');
+        this.targetNode.style.left = (BALLOON_RADIUS * 0.6) + 'px';
+        this.targetNode.style.top = (BALLOON_RADIUS * 0.6) + 'px';
+        this.targetNode.style.width = (BALLOON_RADIUS * 0.8) + 'px';
+        this.targetNode.style.height = (BALLOON_RADIUS * 0.8) + 'px';
+        this.targetNode.style['font-size'] = (BALLOON_RADIUS * 0.8) + 'px';
+        this.targetNode.style['line-height'] = (BALLOON_RADIUS * 0.6) + 'px';
+
+        this.balloonNode = b.querySelector('svg');
+        this.balloonNode.setAttribute('height', `${BALLOON_RADIUS * 2}`);
+        this.balloonNode.setAttribute('width', `${BALLOON_RADIUS * 2}`);
 
         const left = randomInt(window.innerWidth - 2 * BALLOON_RADIUS);
         b.style.left = left + 'px';
@@ -104,6 +115,10 @@ function nextTick() {
 
 function start() {
     console.log('start');
+    BALLOON_RADIUS = parseInt(document.getElementById('balloon-size').value);
+    TARGET_RADIUS = parseInt(document.getElementById('target-area-size').value);
+    DEFAULT_HEALTH = parseInt(document.getElementById('pop-time').value);
+
     canvas.style.display = 'block';
     state.balloon = new Balloon();
     window.addEventListener('mousemove', mouseMoveHandler);
