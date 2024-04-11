@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heavy page</title>
+    <style>
+        .content {
+            width: 400px;
+            height: 400px;
+            overflow: scroll;
+        }
+
+        #images > div {
+            float: left;
+            width: 20px;
+            height: 20px;
+            margin: 2px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<section>
+    <label for="html-length">Html length in kb</label>
+    <input id="html-length" type="number" value="500">
+    <br>
+    <label for="resource-size">Resources size in kb</label>
+    <input id="resource-size" type="number" value="500">
+    <br>
+    <button onclick="generate()">(Re)generate</button>
+</section>
+
+<br>Content:
+<div id="content" class="content"></div>
+
+<br>Images:
+<div id="images" class="content"></div>
+
+<script>
+    const IMAGE_SIZE = 9942;
+
+    function generate() {
+        const template = document.getElementById('template').content.firstElementChild;
+        const htmlSize = document.getElementById('html-length').value * 1024;
+        const resourceSize = document.getElementById('resource-size').value * 1024;
+
+        const images = document.getElementById('images');
+
+        const imagesCount = Math.ceil(resourceSize / IMAGE_SIZE)
+        console.log(`Adding ${imagesCount} images`);
+        let html = '';
+        for (let i = 0; i < imagesCount; i++) {
+            html += `<div><img src="10kb.png?no-cache=${i}"></div>`
+        }
+        images.innerHTML = html;
+
+
+        const content = document.getElementById('content');
+        content.innerHTML = ''
+
+        const currentSize = document.documentElement.innerHTML.length
+        if (htmlSize < currentSize) {
+            const message = `Can't make HTML size less than ${currentSize} chars`;
+            content.innerHTML = `<h1>${message}</h1>`;
+            console.error(message);
+        } else {
+            const snippetsCount = Math.ceil((htmlSize - currentSize) / template.innerHTML.length)
+            console.log(`Adding ${snippetsCount} html snippets`);
+            for (let i = 0; i < snippetsCount; i++) {
+                content.appendChild(template.cloneNode(true))
+            }
+        }
+        console.log('Done!');
+    }
+
+    window.onload = generate;
+</script>
+
+
+<template id="template">
+    <section>
+        <div class="option_row">
+            <div class="option_label"><label for="id_start_with_invite_modal">modal:</label>
+                <div class="option_helptext">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lobortis
+                    ligula nec maximus pretium. Nullam eget tellus sit amet lectus molestie hendrerit. Nam dapibus faucibus
+                    ullamcorper. Cras mollis condimentum augue id tincidunt. Sed commodo pharetra urna, accumsan convallis
+                    orci aliquet sed. Cras vulputate libero eu viverra iaculis. Aenean consectetur pellentesque diam vitae
+                    maximus. Donec eget lorem viverra, egestas lacus eget, finibus turpis.
+                </div>
+                <div class="comment-text  js-comment-text-and-form">
+                    <div class="comment-body js-comment-edit-hide">
+                        <span class="comment-copy">Any solutions for the "Is it possible to add this info to the chart of <code>top</code>?" part? :)</span>
+                        <div class="d-inline-flex ai-center">
+        –&nbsp;<a href="/users/306707/janaka-bandara" title="121 reputation" class="comment-user">Janaka Bandara</a>
+                        </div>
+                        <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># podman stats -a --no-stream</span>
+        <span class="n">ID</span>             <span class="n">NAME</span>              <span class="n">CPU</span> <span class="o">%</span>   <span class="n">MEM</span> <span class="n">USAGE</span> <span class="o">/</span> <span class="n">LIMIT</span>   <span class="n">MEM</span> <span class="o">%</span>   <span class="n">NET</span> <span class="n">IO</span>    <span class="n">BLOCK</span> <span class="n">IO</span>   <span class="n">PIDS</span>
+        <span class="n">a9f807ffaacd</span>   <span class="n">frosty_hodgkin</span>    <span class="o">--</span>      <span class="mf">3.092</span><span class="n">MB</span> <span class="o">/</span> <span class="mf">16.7</span><span class="n">GB</span>    <span class="mf">0.02</span><span class="o">%</span>   <span class="o">--</span> <span class="o">/</span> <span class="o">--</span>   <span class="o">--</span> <span class="o">/</span> <span class="o">--</span>    <span class="mi">2</span>
+        <span class="mi">3</span><span class="n">b33001239ee</span>   <span class="n">sleepy_stallman</span>   <span class="o">--</span>      <span class="o">--</span> <span class="o">/</span> <span class="o">--</span>             <span class="o">--</span>      <span class="o">--</span> <span class="o">/</span> <span class="o">--</span>   <span class="o">--</span> <span class="o">/</span> <span class="o">--</span>    <span class="o">--</span>
+        </pre></div>
+        </div>
+                        <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment1050793_257263" aria-label="Link to comment"><span title="2015-12-25 02:57:06Z, License: CC BY-SA 3.0" class="relativetime-clean">Dec 25, 2015 at 2:57</span></a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="option_value"><input type="checkbox" name="start_with_invite_modal" id="id_start_with_invite_modal">
+            </div>
+            <div class="option_errors"></div>
+            <ul><li><a href="#drop-a-list-of-columns">Drop a list of columns</a></li><li><a href="#drop-columns-matching-a-predicate">Drop columns matching a predicate</a></li></ul>
+        </div>
+        <br>
+    </section>
+</template>
+
+</body>
+</html>
