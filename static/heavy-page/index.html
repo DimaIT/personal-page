@@ -40,7 +40,7 @@
 <script>
     const IMAGE_SIZE = 9942;
 
-    function generate() {
+    async function generate() {
         const template = document.getElementById('template').content.firstElementChild;
         const htmlSize = document.getElementById('html-length').value * 1024;
         const resourceSize = document.getElementById('resource-size').value * 1024;
@@ -55,6 +55,7 @@
         }
         images.innerHTML = html;
 
+        await wait(200); // unlock main thread for some time
 
         const content = document.getElementById('content');
         content.innerHTML = ''
@@ -72,6 +73,10 @@
             }
         }
         console.log('Done!');
+    }
+
+    function wait(ms) {
+        return new Promise(res => setTimeout(res, ms))
     }
 
     window.onload = generate;
@@ -94,12 +99,16 @@
                         <div class="d-inline-flex ai-center">
         –&nbsp;<a href="/users/306707/janaka-bandara" title="121 reputation" class="comment-user">Janaka Bandara</a>
                         </div>
-                        <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># podman stats -a --no-stream</span>
-        <span class="n">ID</span>             <span class="n">NAME</span>              <span class="n">CPU</span> <span class="o">%</span>   <span class="n">MEM</span> <span class="n">USAGE</span> <span class="o">/</span> <span class="n">LIMIT</span>   <span class="n">MEM</span> <span class="o">%</span>   <span class="n">NET</span> <span class="n">IO</span>    <span class="n">BLOCK</span> <span class="n">IO</span>   <span class="n">PIDS</span>
-        <span class="n">a9f807ffaacd</span>   <span class="n">frosty_hodgkin</span>    <span class="o">--</span>      <span class="mf">3.092</span><span class="n">MB</span> <span class="o">/</span> <span class="mf">16.7</span><span class="n">GB</span>    <span class="mf">0.02</span><span class="o">%</span>   <span class="o">--</span> <span class="o">/</span> <span class="o">--</span>   <span class="o">--</span> <span class="o">/</span> <span class="o">--</span>    <span class="mi">2</span>
-        <span class="mi">3</span><span class="n">b33001239ee</span>   <span class="n">sleepy_stallman</span>   <span class="o">--</span>      <span class="o">--</span> <span class="o">/</span> <span class="o">--</span>             <span class="o">--</span>      <span class="o">--</span> <span class="o">/</span> <span class="o">--</span>   <span class="o">--</span> <span class="o">/</span> <span class="o">--</span>    <span class="o">--</span>
-        </pre></div>
-        </div>
+                        <div class="highlight-default notranslate">
+                            <div class="highlight"><pre><span></span><span
+                                    class="c1"># podman stats -a --no-stream</span>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lobortis
+                    ligula nec maximus pretium. Nullam eget tellus sit amet lectus molestie hendrerit. Nam dapibus faucibus
+                    ullamcorper. Cras mollis condimentum augue id tincidunt. Sed commodo pharetra urna, accumsan convallis
+                    orci aliquet sed. Cras vulputate libero eu viverra iaculis. Aenean consectetur pellentesque diam vitae
+                    maximus. Donec eget lorem viverra, egestas lacus eget, finibus turpis.
+                            </div>
+                        </div>
                         <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment1050793_257263" aria-label="Link to comment"><span title="2015-12-25 02:57:06Z, License: CC BY-SA 3.0" class="relativetime-clean">Dec 25, 2015 at 2:57</span></a></span>
                     </div>
                 </div>
