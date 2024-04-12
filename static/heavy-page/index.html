@@ -28,6 +28,9 @@
     <label for="resource-size">Resources size in kb</label>
     <input id="resource-size" type="number" value="500">
     <br>
+    <label for="regenerate-interval">Regenerate every .ms (no less than 300)</label>
+    <input id="regenerate-interval" type="number" value="0">
+    <br>
     <button onclick="generate()">(Re)generate</button>
 </section>
 
@@ -40,8 +43,10 @@
 <script>
     const IMAGE_SIZE = 52357;
     const IMAGE_NAME = '50kb.jpg';
+    let interval = null;
 
     async function generate() {
+        clearInterval(interval);
         const template = document.getElementById('template').content.firstElementChild;
         const htmlSize = document.getElementById('html-length').value * 1024;
         const resourceSize = document.getElementById('resource-size').value * 1024;
@@ -52,14 +57,16 @@
         console.log(`Adding ${imagesCount} images`);
         let html = '';
         for (let i = 0; i < imagesCount; i++) {
-            html += `<div><img src="${IMAGE_NAME}?no-cache=${i}"></div>`
+            html += `<div><img src="${IMAGE_NAME}?no-cache=${performance.now()}${i}"></div>`
         }
         images.innerHTML = html;
 
-        await wait(200); // unlock main thread for some time
+        await wait(150); // unlock main thread for some time
 
         const content = document.getElementById('content');
         content.innerHTML = ''
+
+        await wait(150); // rerender
 
         const currentSize = document.documentElement.innerHTML.length
         if (htmlSize < currentSize) {
@@ -74,6 +81,12 @@
             }
         }
         console.log('Done!');
+
+
+        const regenerateIntervalMs = document.getElementById('regenerate-interval').value;
+        if (regenerateIntervalMs >= 300) {
+            interval = setInterval(generate, regenerateIntervalMs);
+        }
     }
 
     function wait(ms) {
