@@ -12,8 +12,8 @@
 
         #images > div {
             float: left;
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             margin: 2px;
             overflow: hidden;
         }
@@ -38,7 +38,8 @@
 <div id="images" class="content"></div>
 
 <script>
-    const IMAGE_SIZE = 9942;
+    const IMAGE_SIZE = 52357;
+    const IMAGE_NAME = '50kb.jpg';
 
     async function generate() {
         const template = document.getElementById('template').content.firstElementChild;
@@ -51,7 +52,7 @@
         console.log(`Adding ${imagesCount} images`);
         let html = '';
         for (let i = 0; i < imagesCount; i++) {
-            html += `<div><img src="10kb.png?no-cache=${i}"></div>`
+            html += `<div><img src="${IMAGE_NAME}?no-cache=${i}"></div>`
         }
         images.innerHTML = html;
 
